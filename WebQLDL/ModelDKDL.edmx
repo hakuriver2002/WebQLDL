@@ -1,0 +1,358 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="QLDKDULICHModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tChiTietTuyenDuLich">
+          <Key>
+            <PropertyRef Name="MaChuyen" />
+            <PropertyRef Name="MaDD" />
+          </Key>
+          <Property Name="MaChuyen" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="MaDD" Type="varchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tChuyenDuLich">
+          <Key>
+            <PropertyRef Name="MaChuyen" />
+          </Key>
+          <Property Name="MaChuyen" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="MaTuyen" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="PhuongTien" Type="nvarchar" MaxLength="10" />
+          <Property Name="TenHDVien" Type="nvarchar" MaxLength="50" />
+          <Property Name="DonGia" Type="float" />
+        </EntityType>
+        <EntityType Name="tDangKy">
+          <Key>
+            <PropertyRef Name="MaChuyen" />
+            <PropertyRef Name="MaKhach" />
+          </Key>
+          <Property Name="MaChuyen" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="MaKhach" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="NgayDKy" Type="datetime" />
+          <Property Name="STDTra" Type="float" />
+        </EntityType>
+        <EntityType Name="tDiaDiemThamQuan">
+          <Key>
+            <PropertyRef Name="MaDD" />
+          </Key>
+          <Property Name="MaDD" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="TenDD" Type="nvarchar" MaxLength="50" />
+          <Property Name="TenTinhThanh" Type="nvarchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="tKhach">
+          <Key>
+            <PropertyRef Name="MaKhach" />
+          </Key>
+          <Property Name="MaKhach" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="TenKhach" Type="nvarchar" MaxLength="50" />
+          <Property Name="DienThoai" Type="varchar" MaxLength="10" />
+          <Property Name="DiaChi" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="tTuyen">
+          <Key>
+            <PropertyRef Name="MaTuyen" />
+          </Key>
+          <Property Name="MaTuyen" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="TenTuyen" Type="nvarchar" MaxLength="50" />
+          <Property Name="SoNgay" Type="int" />
+          <Property Name="GhiChu" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <Association Name="FK_tChiTietTuyenDuLich_MaChuyen">
+          <End Role="tChuyenDuLich" Type="Self.tChuyenDuLich" Multiplicity="1" />
+          <End Role="tChiTietTuyenDuLich" Type="Self.tChiTietTuyenDuLich" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tChuyenDuLich">
+              <PropertyRef Name="MaChuyen" />
+            </Principal>
+            <Dependent Role="tChiTietTuyenDuLich">
+              <PropertyRef Name="MaChuyen" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tChiTietTuyenDuLich_MaDD">
+          <End Role="tDiaDiemThamQuan" Type="Self.tDiaDiemThamQuan" Multiplicity="1" />
+          <End Role="tChiTietTuyenDuLich" Type="Self.tChiTietTuyenDuLich" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tDiaDiemThamQuan">
+              <PropertyRef Name="MaDD" />
+            </Principal>
+            <Dependent Role="tChiTietTuyenDuLich">
+              <PropertyRef Name="MaDD" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tChuyenDuLich_MaTuyen">
+          <End Role="tTuyen" Type="Self.tTuyen" Multiplicity="1" />
+          <End Role="tChuyenDuLich" Type="Self.tChuyenDuLich" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tTuyen">
+              <PropertyRef Name="MaTuyen" />
+            </Principal>
+            <Dependent Role="tChuyenDuLich">
+              <PropertyRef Name="MaTuyen" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tDangKy_MaChuyen">
+          <End Role="tChuyenDuLich" Type="Self.tChuyenDuLich" Multiplicity="1" />
+          <End Role="tDangKy" Type="Self.tDangKy" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tChuyenDuLich">
+              <PropertyRef Name="MaChuyen" />
+            </Principal>
+            <Dependent Role="tDangKy">
+              <PropertyRef Name="MaChuyen" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tDangKy_MaKhach">
+          <End Role="tKhach" Type="Self.tKhach" Multiplicity="1" />
+          <End Role="tDangKy" Type="Self.tDangKy" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tKhach">
+              <PropertyRef Name="MaKhach" />
+            </Principal>
+            <Dependent Role="tDangKy">
+              <PropertyRef Name="MaKhach" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="QLDKDULICHModelStoreContainer">
+          <EntitySet Name="tChiTietTuyenDuLich" EntityType="Self.tChiTietTuyenDuLich" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tChuyenDuLich" EntityType="Self.tChuyenDuLich" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tDangKy" EntityType="Self.tDangKy" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tDiaDiemThamQuan" EntityType="Self.tDiaDiemThamQuan" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tKhach" EntityType="Self.tKhach" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tTuyen" EntityType="Self.tTuyen" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_tChiTietTuyenDuLich_MaChuyen" Association="Self.FK_tChiTietTuyenDuLich_MaChuyen">
+            <End Role="tChuyenDuLich" EntitySet="tChuyenDuLich" />
+            <End Role="tChiTietTuyenDuLich" EntitySet="tChiTietTuyenDuLich" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tChiTietTuyenDuLich_MaDD" Association="Self.FK_tChiTietTuyenDuLich_MaDD">
+            <End Role="tDiaDiemThamQuan" EntitySet="tDiaDiemThamQuan" />
+            <End Role="tChiTietTuyenDuLich" EntitySet="tChiTietTuyenDuLich" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tChuyenDuLich_MaTuyen" Association="Self.FK_tChuyenDuLich_MaTuyen">
+            <End Role="tTuyen" EntitySet="tTuyen" />
+            <End Role="tChuyenDuLich" EntitySet="tChuyenDuLich" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tDangKy_MaChuyen" Association="Self.FK_tDangKy_MaChuyen">
+            <End Role="tChuyenDuLich" EntitySet="tChuyenDuLich" />
+            <End Role="tDangKy" EntitySet="tDangKy" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tDangKy_MaKhach" Association="Self.FK_tDangKy_MaKhach">
+            <End Role="tKhach" EntitySet="tKhach" />
+            <End Role="tDangKy" EntitySet="tDangKy" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="QLDKDULICHModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="QLDKDULICHEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tChuyenDuLich" EntityType="QLDKDULICHModel.tChuyenDuLich" />
+          <EntitySet Name="tDangKy" EntityType="QLDKDULICHModel.tDangKy" />
+          <EntitySet Name="tDiaDiemThamQuan" EntityType="QLDKDULICHModel.tDiaDiemThamQuan" />
+          <EntitySet Name="tKhach" EntityType="QLDKDULICHModel.tKhach" />
+          <EntitySet Name="tTuyen" EntityType="QLDKDULICHModel.tTuyen" />
+          <AssociationSet Name="FK_tChuyenDuLich_MaTuyen" Association="QLDKDULICHModel.FK_tChuyenDuLich_MaTuyen">
+            <End Role="tTuyen" EntitySet="tTuyen" />
+            <End Role="tChuyenDuLich" EntitySet="tChuyenDuLich" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tDangKy_MaChuyen" Association="QLDKDULICHModel.FK_tDangKy_MaChuyen">
+            <End Role="tChuyenDuLich" EntitySet="tChuyenDuLich" />
+            <End Role="tDangKy" EntitySet="tDangKy" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tDangKy_MaKhach" Association="QLDKDULICHModel.FK_tDangKy_MaKhach">
+            <End Role="tKhach" EntitySet="tKhach" />
+            <End Role="tDangKy" EntitySet="tDangKy" />
+          </AssociationSet>
+          <AssociationSet Name="tChiTietTuyenDuLich" Association="QLDKDULICHModel.tChiTietTuyenDuLich">
+            <End Role="tChuyenDuLich" EntitySet="tChuyenDuLich" />
+            <End Role="tDiaDiemThamQuan" EntitySet="tDiaDiemThamQuan" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="tChuyenDuLich">
+          <Key>
+            <PropertyRef Name="MaChuyen" />
+          </Key>
+          <Property Name="MaChuyen" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="MaTuyen" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="PhuongTien" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="TenHDVien" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DonGia" Type="Double" />
+          <NavigationProperty Name="tTuyen" Relationship="QLDKDULICHModel.FK_tChuyenDuLich_MaTuyen" FromRole="tChuyenDuLich" ToRole="tTuyen" />
+          <NavigationProperty Name="tDangKy" Relationship="QLDKDULICHModel.FK_tDangKy_MaChuyen" FromRole="tChuyenDuLich" ToRole="tDangKy" />
+          <NavigationProperty Name="tDiaDiemThamQuan" Relationship="QLDKDULICHModel.tChiTietTuyenDuLich" FromRole="tChuyenDuLich" ToRole="tDiaDiemThamQuan" />
+        </EntityType>
+        <EntityType Name="tDangKy">
+          <Key>
+            <PropertyRef Name="MaChuyen" />
+            <PropertyRef Name="MaKhach" />
+          </Key>
+          <Property Name="MaChuyen" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="MaKhach" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="NgayDKy" Type="DateTime" Precision="3" />
+          <Property Name="STDTra" Type="Double" />
+          <NavigationProperty Name="tChuyenDuLich" Relationship="QLDKDULICHModel.FK_tDangKy_MaChuyen" FromRole="tDangKy" ToRole="tChuyenDuLich" />
+          <NavigationProperty Name="tKhach" Relationship="QLDKDULICHModel.FK_tDangKy_MaKhach" FromRole="tDangKy" ToRole="tKhach" />
+        </EntityType>
+        <EntityType Name="tDiaDiemThamQuan">
+          <Key>
+            <PropertyRef Name="MaDD" />
+          </Key>
+          <Property Name="MaDD" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="TenDD" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TenTinhThanh" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tChuyenDuLich" Relationship="QLDKDULICHModel.tChiTietTuyenDuLich" FromRole="tDiaDiemThamQuan" ToRole="tChuyenDuLich" />
+        </EntityType>
+        <EntityType Name="tKhach">
+          <Key>
+            <PropertyRef Name="MaKhach" />
+          </Key>
+          <Property Name="MaKhach" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="TenKhach" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DienThoai" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="DiaChi" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tDangKy" Relationship="QLDKDULICHModel.FK_tDangKy_MaKhach" FromRole="tKhach" ToRole="tDangKy" />
+        </EntityType>
+        <EntityType Name="tTuyen">
+          <Key>
+            <PropertyRef Name="MaTuyen" />
+          </Key>
+          <Property Name="MaTuyen" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="TenTuyen" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SoNgay" Type="Int32" />
+          <Property Name="GhiChu" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tChuyenDuLich" Relationship="QLDKDULICHModel.FK_tChuyenDuLich_MaTuyen" FromRole="tTuyen" ToRole="tChuyenDuLich" />
+        </EntityType>
+        <Association Name="FK_tChuyenDuLich_MaTuyen">
+          <End Type="QLDKDULICHModel.tTuyen" Role="tTuyen" Multiplicity="1" />
+          <End Type="QLDKDULICHModel.tChuyenDuLich" Role="tChuyenDuLich" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tTuyen">
+              <PropertyRef Name="MaTuyen" />
+            </Principal>
+            <Dependent Role="tChuyenDuLich">
+              <PropertyRef Name="MaTuyen" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tDangKy_MaChuyen">
+          <End Type="QLDKDULICHModel.tChuyenDuLich" Role="tChuyenDuLich" Multiplicity="1" />
+          <End Type="QLDKDULICHModel.tDangKy" Role="tDangKy" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tChuyenDuLich">
+              <PropertyRef Name="MaChuyen" />
+            </Principal>
+            <Dependent Role="tDangKy">
+              <PropertyRef Name="MaChuyen" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tDangKy_MaKhach">
+          <End Type="QLDKDULICHModel.tKhach" Role="tKhach" Multiplicity="1" />
+          <End Type="QLDKDULICHModel.tDangKy" Role="tDangKy" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tKhach">
+              <PropertyRef Name="MaKhach" />
+            </Principal>
+            <Dependent Role="tDangKy">
+              <PropertyRef Name="MaKhach" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="tChiTietTuyenDuLich">
+          <End Type="QLDKDULICHModel.tChuyenDuLich" Role="tChuyenDuLich" Multiplicity="*" />
+          <End Type="QLDKDULICHModel.tDiaDiemThamQuan" Role="tDiaDiemThamQuan" Multiplicity="*" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="QLDKDULICHModelStoreContainer" CdmEntityContainer="QLDKDULICHEntities">
+          <EntitySetMapping Name="tChuyenDuLich">
+            <EntityTypeMapping TypeName="QLDKDULICHModel.tChuyenDuLich">
+              <MappingFragment StoreEntitySet="tChuyenDuLich">
+                <ScalarProperty Name="DonGia" ColumnName="DonGia" />
+                <ScalarProperty Name="TenHDVien" ColumnName="TenHDVien" />
+                <ScalarProperty Name="PhuongTien" ColumnName="PhuongTien" />
+                <ScalarProperty Name="MaTuyen" ColumnName="MaTuyen" />
+                <ScalarProperty Name="MaChuyen" ColumnName="MaChuyen" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tDangKy">
+            <EntityTypeMapping TypeName="QLDKDULICHModel.tDangKy">
+              <MappingFragment StoreEntitySet="tDangKy">
+                <ScalarProperty Name="STDTra" ColumnName="STDTra" />
+                <ScalarProperty Name="NgayDKy" ColumnName="NgayDKy" />
+                <ScalarProperty Name="MaKhach" ColumnName="MaKhach" />
+                <ScalarProperty Name="MaChuyen" ColumnName="MaChuyen" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tDiaDiemThamQuan">
+            <EntityTypeMapping TypeName="QLDKDULICHModel.tDiaDiemThamQuan">
+              <MappingFragment StoreEntitySet="tDiaDiemThamQuan">
+                <ScalarProperty Name="TenTinhThanh" ColumnName="TenTinhThanh" />
+                <ScalarProperty Name="TenDD" ColumnName="TenDD" />
+                <ScalarProperty Name="MaDD" ColumnName="MaDD" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tKhach">
+            <EntityTypeMapping TypeName="QLDKDULICHModel.tKhach">
+              <MappingFragment StoreEntitySet="tKhach">
+                <ScalarProperty Name="DiaChi" ColumnName="DiaChi" />
+                <ScalarProperty Name="DienThoai" ColumnName="DienThoai" />
+                <ScalarProperty Name="TenKhach" ColumnName="TenKhach" />
+                <ScalarProperty Name="MaKhach" ColumnName="MaKhach" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tTuyen">
+            <EntityTypeMapping TypeName="QLDKDULICHModel.tTuyen">
+              <MappingFragment StoreEntitySet="tTuyen">
+                <ScalarProperty Name="GhiChu" ColumnName="GhiChu" />
+                <ScalarProperty Name="SoNgay" ColumnName="SoNgay" />
+                <ScalarProperty Name="TenTuyen" ColumnName="TenTuyen" />
+                <ScalarProperty Name="MaTuyen" ColumnName="MaTuyen" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="tChiTietTuyenDuLich" TypeName="QLDKDULICHModel.tChiTietTuyenDuLich" StoreEntitySet="tChiTietTuyenDuLich">
+            <EndProperty Name="tDiaDiemThamQuan">
+              <ScalarProperty Name="MaDD" ColumnName="MaDD" />
+            </EndProperty>
+            <EndProperty Name="tChuyenDuLich">
+              <ScalarProperty Name="MaChuyen" ColumnName="MaChuyen" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
